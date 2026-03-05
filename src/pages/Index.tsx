@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Droplets, User, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,9 +10,15 @@ const Index = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: implement auth
+    if (isLogin) {
+      navigate("/dashboard");
+    } else {
+      navigate("/register");
+    }
   };
 
   return (
