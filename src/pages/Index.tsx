@@ -15,7 +15,7 @@ const Index = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isLogin) {
-      navigate("/dashboard");
+      navigate("/splash");
     } else {
       navigate("/register");
     }
