@@ -15,10 +15,10 @@ const chartData = [
 ];
 
 const features = [
-  { icon: UtensilsCrossed, label: "กรอกข้อมูลอาหาร", path: "/food-log" },
-  { icon: BookOpen, label: "แนะนำรายการอาหาร", path: "/food-recommend" },
-  { icon: Pill, label: "ความรู้เกี่ยวกับยา-สมุนไพร", path: "/medicine" },
-  { icon: Star, label: "คะแนนสะสม", path: "/points" },
+  { icon: UtensilsCrossed, label: "กรอกข้อมูลอาหาร", path: "/food-log", bg: "bg-[hsl(30,90%,55%)]" },
+  { icon: BookOpen, label: "แนะนำรายการอาหาร", path: "/food-recommend", bg: "bg-[hsl(255,60%,65%)]" },
+  { icon: Pill, label: "ความรู้เกี่ยวกับยา", path: "/medicine", bg: "bg-[hsl(170,60%,55%)]" },
+  { icon: Star, label: "คะแนนสะสม", path: "/points", bg: "bg-[hsl(40,80%,60%)]" },
 ];
 
 const Dashboard = () => {
