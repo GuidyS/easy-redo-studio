@@ -68,8 +68,8 @@ const Dashboard = () => {
                 onClick={() => navigate(feature.path)}
                 className="glass-card flex flex-col items-center gap-3 rounded-2xl p-6 shadow-md transition-shadow hover:shadow-lg"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-secondary">
-                  <Icon className="h-7 w-7 text-muted-foreground" />
+                <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${feature.bg} shadow-md`}>
+                  <Icon className="h-7 w-7 text-white" />
                 </div>
                 <span className="font-heading text-sm font-semibold text-foreground">
                   {feature.label}
