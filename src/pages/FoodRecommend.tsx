@@ -112,7 +112,7 @@ const FoodRecommend = () => {
               <div className="mt-3 h-2 rounded-full bg-secondary">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${Math.min((food.sodium / 3000) * 100, 100)}%` }}
+                  animate={{ width: `${Math.min((food.sodium / 2000) * 100, 100)}%` }}
                   transition={{ delay: i * 0.1 + 0.3, duration: 0.5 }}
                   className={`h-full rounded-full ${
                     activeTab === "healthy"
