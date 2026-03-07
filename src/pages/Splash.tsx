@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Droplets, Heart, Shield, Activity } from "lucide-react";
+import logoCS from "@/assets/logo-cs.png";
+import logoPharmacy from "@/assets/logo-pharmacy.png";
+import logoNursing from "@/assets/logo-nursing.png";
+import logoSSS from "@/assets/logo-sss.png";
 
 const logos = [
-  { icon: Droplets, label: "Sodium Tracking", color: "from-primary to-accent" },
-  { icon: Heart, label: "สุขภาพดี", color: "from-pink-400 to-rose-500" },
-  { icon: Shield, label: "ปลอดภัย", color: "from-emerald-400 to-teal-500" },
-  { icon: Activity, label: "ติดตามผล", color: "from-amber-400 to-orange-500" },
+  { src: logoCS, label: "CS Siam U." },
+  { src: logoPharmacy, label: "คณะเภสัชศาสตร์" },
+  { src: logoNursing, label: "กพย." },
+  { src: logoSSS, label: "สสส." },
 ];
 
 const Splash = () => {
@@ -34,37 +37,31 @@ const Splash = () => {
           <div className="pointer-events-none fixed inset-0 overflow-hidden">
             <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />
             <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-accent/15 blur-3xl" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
           </div>
 
           {/* Logo grid */}
           <div className="relative grid grid-cols-2 gap-6 mb-10">
-            {logos.map((logo, i) => {
-              const Icon = logo.icon;
-              return (
-                <motion.div
-                  key={logo.label}
-                  initial={{ opacity: 0, scale: 0, rotate: -20 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 15,
-                    delay: 0.2 + i * 0.15,
-                  }}
-                  className="flex flex-col items-center gap-2"
-                >
-                  <div
-                    className={`flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${logo.color} shadow-lg`}
-                  >
-                    <Icon className="h-10 w-10 text-white" />
-                  </div>
-                  <span className="text-xs font-medium text-muted-foreground">
-                    {logo.label}
-                  </span>
-                </motion.div>
-              );
-            })}
+            {logos.map((logo, i) => (
+              <motion.div
+                key={logo.label}
+                initial={{ opacity: 0, scale: 0, rotate: -20 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.2 + i * 0.15,
+                }}
+                className="flex flex-col items-center gap-2"
+              >
+                <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-card shadow-lg p-2">
+                  <img src={logo.src} alt={logo.label} className="h-full w-full object-contain" />
+                </div>
+                <span className="text-xs font-medium text-muted-foreground">
+                  {logo.label}
+                </span>
+              </motion.div>
+            ))}
           </div>
 
           {/* App title */}
