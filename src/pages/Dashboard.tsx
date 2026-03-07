@@ -15,10 +15,10 @@ const chartData = [
 ];
 
 const features = [
-  { icon: UtensilsCrossed, label: "กรอกข้อมูลอาหาร", path: "/food-log" },
-  { icon: BookOpen, label: "แนะนำรายการอาหาร", path: "/food-recommend" },
-  { icon: Pill, label: "ความรู้เกี่ยวกับยา-สมุนไพร", path: "/medicine" },
-  { icon: Star, label: "คะแนนสะสม", path: "/points" },
+  { icon: UtensilsCrossed, label: "กรอกข้อมูลอาหาร", path: "/food-log", bg: "bg-[hsl(30,90%,55%)]" },
+  { icon: BookOpen, label: "แนะนำรายการอาหาร", path: "/food-recommend", bg: "bg-[hsl(255,60%,65%)]" },
+  { icon: Pill, label: "ความรู้เกี่ยวกับยา", path: "/medicine", bg: "bg-[hsl(170,60%,55%)]" },
+  { icon: Star, label: "คะแนนสะสม", path: "/points", bg: "bg-[hsl(40,80%,60%)]" },
 ];
 
 const Dashboard = () => {
@@ -68,8 +68,8 @@ const Dashboard = () => {
                 onClick={() => navigate(feature.path)}
                 className="glass-card flex flex-col items-center gap-3 rounded-2xl p-6 shadow-md transition-shadow hover:shadow-lg"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-secondary">
-                  <Icon className="h-7 w-7 text-muted-foreground" />
+                <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${feature.bg} shadow-md`}>
+                  <Icon className="h-7 w-7 text-white" />
                 </div>
                 <span className="font-heading text-sm font-semibold text-foreground">
                   {feature.label}
