@@ -22,7 +22,7 @@ const Stats = () => {
         <div className="grid grid-cols-2 gap-3">
           <div className="glass-card rounded-2xl p-5 shadow-md text-center">
             <p className="font-heading text-base font-semibold text-foreground">เฉลี่ยต่อวัน</p>
-            <p className="font-heading text-xl font-bold text-muted-foreground mt-1">{avgDaily.toLocaleString()} mg</p>
+            <p className="font-heading text-xl font-bold mt-1" style={{ color: "hsl(25 90% 50%)" }}>{avgDaily.toLocaleString()} mg</p>
           </div>
           <div className="glass-card rounded-2xl p-5 shadow-md text-center">
             <p className="font-heading text-base font-semibold text-foreground">เป้าหมาย</p>
