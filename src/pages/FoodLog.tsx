@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ArrowLeft, Check, X } from "lucide-react";
+import { Search, ArrowLeft, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 
@@ -25,7 +25,7 @@ const FoodLog = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [selectedFoods, setSelectedFoods] = useState<number[]>([]);
-  const [selectedMeal, setSelectedMeal] = useState<string>("breakfast");
+  const [showMealModal, setShowMealModal] = useState(false);
 
   const filteredFoods = foodDatabase.filter((f) =>
     f.name.includes(search)
@@ -42,10 +42,15 @@ const FoodLog = () => {
     return sum + (food?.sodium ?? 0);
   }, 0);
 
-  const handleSave = () => {
+  const handleSaveClick = () => {
     if (selectedFoods.length > 0) {
-      navigate("/daily");
+      setShowMealModal(true);
     }
+  };
+
+  const handleMealSelect = (mealId: string) => {
+    setShowMealModal(false);
+    navigate("/daily");
   };
 
   return (
@@ -62,23 +67,6 @@ const FoodLog = () => {
           <h1 className="font-heading text-2xl font-bold text-foreground">
             กรอกข้อมูลอาหาร
           </h1>
-        </div>
-
-        {/* Meal type selector */}
-        <div className="flex gap-2">
-          {mealTypes.map((meal) => (
-            <button
-              key={meal.id}
-              onClick={() => setSelectedMeal(meal.id)}
-              className={`flex-1 rounded-xl py-2.5 px-3 text-sm font-semibold transition-all ${
-                selectedMeal === meal.id
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "bg-secondary text-muted-foreground hover:bg-secondary/80"
-              }`}
-            >
-              <span className="mr-1">{meal.emoji}</span> {meal.label}
-            </button>
-          ))}
         </div>
 
         {/* Search */}
@@ -107,9 +95,7 @@ const FoodLog = () => {
                   transition={{ delay: i * 0.05 }}
                   onClick={() => toggleFood(food.id)}
                   className={`glass-card flex w-full items-center gap-4 rounded-2xl p-4 shadow-md text-left transition-all ${
-                    isSelected
-                      ? "ring-2 ring-primary border-primary"
-                      : ""
+                    isSelected ? "ring-2 ring-primary border-primary" : ""
                   }`}
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-2xl">
@@ -147,14 +133,62 @@ const FoodLog = () => {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={handleSave}
+              onClick={handleSaveClick}
               className="w-full rounded-xl gradient-btn py-3.5 font-heading text-lg font-semibold text-primary-foreground shadow-lg"
             >
-              บันทึก{mealTypes.find((m) => m.id === selectedMeal)?.label}
+              บันทึก
             </motion.button>
           </motion.div>
         )}
       </motion.div>
+
+      {/* Meal type modal */}
+      <AnimatePresence>
+        {showMealModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm"
+            onClick={() => setShowMealModal(false)}
+          >
+            <motion.div
+              initial={{ y: 300 }}
+              animate={{ y: 0 }}
+              exit={{ y: 300 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-md rounded-t-3xl bg-card p-6 pb-10 shadow-2xl"
+            >
+              <div className="mx-auto mb-5 h-1.5 w-12 rounded-full bg-muted" />
+              <h2 className="font-heading text-xl font-bold text-foreground text-center mb-2">
+                เลือกมื้ออาหาร
+              </h2>
+              <p className="text-sm text-muted-foreground text-center mb-6">
+                {selectedFoods.length} รายการ · {totalSodium.toLocaleString()} mg โซเดียม
+              </p>
+              <div className="space-y-3">
+                {mealTypes.map((meal) => (
+                  <motion.button
+                    key={meal.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => handleMealSelect(meal.id)}
+                    className="flex w-full items-center gap-4 rounded-2xl bg-secondary p-4 text-left transition-colors hover:bg-secondary/80"
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-2xl">
+                      {meal.emoji}
+                    </div>
+                    <span className="font-heading text-lg font-semibold text-foreground">
+                      {meal.label}
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageLayout>
   );
 };
