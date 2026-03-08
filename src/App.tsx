@@ -38,6 +38,8 @@ const App = () => (
           <Route path="/food-recommend" element={<FoodRecommend />} />
           <Route path="/medicine" element={<Medicine />} />
           <Route path="/points" element={<Points />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
