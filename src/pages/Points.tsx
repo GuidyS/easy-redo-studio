@@ -34,16 +34,17 @@ const Points = () => {
         <motion.div
           initial={{ scale: 0.9 }}
           animate={{ scale: 1 }}
-          className="gradient-btn rounded-2xl p-6 text-center shadow-lg"
+          className="rounded-2xl p-6 text-center shadow-lg"
+          style={{ background: "linear-gradient(135deg, hsl(45 90% 55%), hsl(25 90% 55%))" }}
         >
           <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-white/20">
-            <Trophy className="h-8 w-8 text-primary-foreground" />
+            <Trophy className="h-8 w-8 text-white" />
           </div>
-          <p className="text-sm text-primary-foreground/80">คะแนนสะสมของคุณ</p>
-          <p className="font-heading text-4xl font-bold text-primary-foreground">
+          <p className="text-sm text-white/80">คะแนนสะสมของคุณ</p>
+          <p className="font-heading text-4xl font-bold text-white">
             {currentPoints.toLocaleString()}
           </p>
-          <p className="mt-1 text-xs text-primary-foreground/60">คะแนน</p>
+          <p className="mt-1 text-xs text-white/60">คะแนน</p>
         </motion.div>
 
         {/* Rewards */}

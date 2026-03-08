@@ -55,15 +55,42 @@ const WeeklyTracking = () => {
           })}
         </div>
 
+        {/* Average & Target */}
+        <div className="grid grid-cols-2 gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="glass-card rounded-2xl p-4 text-center shadow-sm"
+          >
+            <p className="text-sm font-semibold text-muted-foreground">เฉลี่ยต่อวัน</p>
+            <p className="font-heading text-xl font-bold" style={{ color: "hsl(25 90% 50%)" }}>
+              {Math.round(totalWeekly / weeklyData.length).toLocaleString()} mg
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="glass-card rounded-2xl p-4 text-center shadow-sm"
+          >
+            <p className="text-sm font-semibold text-muted-foreground">เป้าหมาย</p>
+            <p className="font-heading text-xl font-bold" style={{ color: "hsl(155 55% 40%)" }}>
+              {limit.toLocaleString()} mg
+            </p>
+          </motion.div>
+        </div>
+
         {/* Total bar */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="gradient-btn flex items-center justify-between rounded-2xl p-5 shadow-lg"
+          transition={{ delay: 0.45 }}
+          className="flex items-center justify-between rounded-2xl p-5 shadow-lg"
+          style={{ background: "linear-gradient(135deg, hsl(45 90% 55%), hsl(25 85% 55%))" }}
         >
-          <p className="font-heading text-lg font-bold text-primary-foreground">รวม</p>
-          <p className="font-heading text-xl font-bold text-primary-foreground">
+          <p className="font-heading text-lg font-bold text-white">รวม</p>
+          <p className="font-heading text-xl font-bold text-white">
             {totalWeekly.toLocaleString()} mg
           </p>
         </motion.div>
