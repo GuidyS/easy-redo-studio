@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Star, Gift, Trophy } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
+import infographicRewards from "@/assets/infographic-rewards.jpg";
 
 const rewards = [
   { name: "คูปองส่วนลดอาหารสุขภาพ", points: 500, emoji: "🎫" },
