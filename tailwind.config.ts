@@ -13,8 +13,8 @@ export default {
       },
     },
     fontFamily: {
-      heading: ['Kanit', 'sans-serif'],
-      body: ['Quicksand', 'sans-serif'],
+      heading: ['Open Sans', 'sans-serif'],
+      body: ['Open Sans', 'sans-serif'],
     },
     extend: {
       colors: {
