@@ -10,7 +10,7 @@ const Register = () => {
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
-  const [email, setEmail] = useState("");
+  
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
