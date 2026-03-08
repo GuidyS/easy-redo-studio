@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, UserCircle, Edit3, Save, LogOut, User, Mail, Phone, Calendar } from "lucide-react";
+import { ArrowLeft, UserCircle, Edit3, Save, LogOut, User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import { useToast } from "@/hooks/use-toast";
@@ -12,10 +12,16 @@ const Profile = () => {
   const [profile, setProfile] = useState({
     name: "ผู้ใช้ทดสอบ",
     email: "user@example.com",
-    phone: "081-234-5678",
-    age: "25",
   });
   const [editProfile, setEditProfile] = useState(profile);
+
+  // Password change state
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleSave = () => {
     setProfile(editProfile);
@@ -24,6 +30,25 @@ const Profile = () => {
       title: "บันทึกสำเร็จ",
       description: "ข้อมูลส่วนตัวของคุณได้รับการอัปเดตแล้ว",
     });
+  };
+
+  const handleChangePassword = () => {
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      toast({ title: "กรุณากรอกข้อมูลให้ครบ", description: "กรุณากรอกรหัสผ่านทุกช่อง", variant: "destructive" });
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast({ title: "รหัสผ่านไม่ตรงกัน", description: "รหัสผ่านใหม่และยืนยันรหัสผ่านไม่ตรงกัน", variant: "destructive" });
+      return;
+    }
+    if (newPassword.length < 6) {
+      toast({ title: "รหัสผ่านสั้นเกินไป", description: "รหัสผ่านใหม่ต้องมีอย่างน้อย 6 ตัวอักษร", variant: "destructive" });
+      return;
+    }
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    toast({ title: "เปลี่ยนรหัสผ่านสำเร็จ", description: "รหัสผ่านของคุณได้รับการอัปเดตแล้ว" });
   };
 
   const handleLogout = () => {
@@ -37,8 +62,6 @@ const Profile = () => {
   const fields = [
     { key: "name" as const, label: "ชื่อ-นามสกุล", icon: User, type: "text" },
     { key: "email" as const, label: "อีเมล", icon: Mail, type: "email" },
-    { key: "phone" as const, label: "เบอร์โทรศัพท์", icon: Phone, type: "tel" },
-    { key: "age" as const, label: "อายุ", icon: Calendar, type: "number" },
   ];
 
   return (
@@ -131,6 +154,75 @@ const Profile = () => {
                 )}
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* Change Password */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="glass-card rounded-2xl p-5 shadow-md"
+        >
+          <h2 className="font-heading text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+            <Lock className="h-5 w-5 text-primary" />
+            แก้ไขรหัสผ่าน
+          </h2>
+          <div className="space-y-4">
+            {/* Current Password */}
+            <div>
+              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">รหัสผ่านปัจจุบัน</label>
+              <div className="relative">
+                <input
+                  type={showCurrent ? "text" : "password"}
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="กรอกรหัสผ่านปัจจุบัน"
+                  className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-2.5 pr-10 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                />
+                <button type="button" onClick={() => setShowCurrent(!showCurrent)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                  {showCurrent ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+            {/* New Password */}
+            <div>
+              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">รหัสผ่านใหม่</label>
+              <div className="relative">
+                <input
+                  type={showNew ? "text" : "password"}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="กรอกรหัสผ่านใหม่"
+                  className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-2.5 pr-10 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                />
+                <button type="button" onClick={() => setShowNew(!showNew)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                  {showNew ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+            {/* Confirm New Password */}
+            <div>
+              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">ยืนยันรหัสผ่านใหม่</label>
+              <div className="relative">
+                <input
+                  type={showConfirm ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="กรอกรหัสผ่านใหม่อีกครั้ง"
+                  className="w-full rounded-xl border border-border bg-secondary/50 px-4 py-2.5 pr-10 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                />
+                <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                  {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+            <button
+              onClick={handleChangePassword}
+              className="w-full rounded-xl gradient-btn py-2.5 text-sm font-semibold text-primary-foreground shadow-md transition-all hover:shadow-lg"
+            >
+              เปลี่ยนรหัสผ่าน
+            </button>
           </div>
         </motion.div>
 
