@@ -97,7 +97,7 @@ const Settings = () => {
             <div className="border-t border-border" />
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">พัฒนาโดย</span>
-              <span className="text-sm font-semibold text-foreground">โครงการเครือข่าย คณะเภสัชศาสตร์</span>
+              <span className="text-sm font-semibold text-foreground">โครงงาน คณะเภสัชศาสตร์</span>
             </div>
             <div className="border-t border-border" />
             <p className="text-xs text-muted-foreground text-center pt-2 flex items-center justify-center gap-1">
