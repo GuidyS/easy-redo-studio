@@ -54,6 +54,20 @@ const Points = () => {
             <Gift className="h-5 w-5 text-primary" />
             ของรางวัล
           </h2>
+
+          {/* Infographic */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.15 }}
+            className="glass-card rounded-2xl overflow-hidden shadow-lg mb-4"
+          >
+            <img
+              src={infographicRewards}
+              alt="เงื่อนไขการรับของรางวัล"
+              className="w-full h-auto object-contain"
+            />
+          </motion.div>
           <div className="space-y-3">
             {rewards.map((reward, i) => {
               const canRedeem = currentPoints >= reward.points;
