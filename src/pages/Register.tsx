@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, User, Mail, Lock, ChevronDown } from "lucide-react";
+import { ArrowLeft, User, Lock, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
