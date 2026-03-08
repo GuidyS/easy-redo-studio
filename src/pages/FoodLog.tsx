@@ -149,16 +149,16 @@ const FoodLog = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
             onClick={() => setShowMealModal(false)}
           >
             <motion.div
-              initial={{ y: 300 }}
-              animate={{ y: 0 }}
-              exit={{ y: 300 }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md rounded-t-3xl bg-card p-6 pb-10 shadow-2xl"
+              className="w-[90%] max-w-sm rounded-3xl bg-card p-6 shadow-2xl"
             >
               <div className="mx-auto mb-5 h-1.5 w-12 rounded-full bg-muted" />
               <h2 className="font-heading text-xl font-bold text-foreground text-center mb-2">
