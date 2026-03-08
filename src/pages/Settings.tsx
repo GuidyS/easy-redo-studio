@@ -100,6 +100,11 @@ const Settings = () => {
               <span className="text-sm font-semibold text-foreground">โครงงาน คณะเภสัชศาสตร์</span>
             </div>
             <div className="border-t border-border" />
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">เว็บไซต์</span>
+              <a href="https://www.DeSaltDeNa.com" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-primary hover:underline">www.DeSaltDeNa.com</a>
+            </div>
+            <div className="border-t border-border" />
             <p className="text-xs text-muted-foreground text-center pt-2 flex items-center justify-center gap-1">
               สร้างด้วย <Heart className="h-3 w-3 text-destructive" /> เพื่อสุขภาพที่ดีของคุณ
             </p>
