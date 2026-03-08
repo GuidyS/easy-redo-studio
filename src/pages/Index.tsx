@@ -8,7 +8,7 @@ const Index = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  
 
   const navigate = useNavigate();
 
