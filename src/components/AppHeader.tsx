@@ -11,7 +11,7 @@ const AppHeader = () => {
       <h1 className="text-xl font-extrabold tracking-wide text-white drop-shadow-sm font-body italic">
         Sodium <span className="opacity-90">Tracking</span>
       </h1>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-5">
         <button onClick={() => navigate("/settings")} className="text-white/80 hover:text-white transition-colors">
           <Settings className="h-5 w-5" />
         </button>
