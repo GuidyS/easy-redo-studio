@@ -5,10 +5,11 @@ import PageLayout from "@/components/PageLayout";
 import infographicRewards from "@/assets/infographic-rewards.jpg";
 
 const rewards = [
-  { name: "คูปองส่วนลดอาหารสุขภาพ", points: 500, emoji: "🎫" },
-  { name: "แก้วน้ำ Eco-Friendly", points: 1000, emoji: "🥤" },
-  { name: "คอร์สออนไลน์โภชนาการ", points: 1500, emoji: "📚" },
-  { name: "เสื้อยืด Sodium Tracking", points: 2000, emoji: "👕" },
+  { name: "เข็มกลัด", points: 500, emoji: "📌" },
+  { name: "สติกเกอร์เซ็ต", points: 800, emoji: "🏷️" },
+  { name: "ปากกา", points: 1000, emoji: "🖊️" },
+  { name: "สบู่กระดาษ", points: 1200, emoji: "🧼" },
+  { name: "กระเป๋าผ้า", points: 1500, emoji: "👜" },
 ];
 
 const Points = () => {
