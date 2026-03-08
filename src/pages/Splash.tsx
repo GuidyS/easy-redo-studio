@@ -72,7 +72,7 @@ const Splash = () => {
             className="text-center"
           >
             <h1 className="font-heading text-3xl font-bold text-foreground">
-              Sodium Tracking
+              Desalt DeNa
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
               ติดตามปริมาณโซเดียมของคุณอย่างง่ายดาย
