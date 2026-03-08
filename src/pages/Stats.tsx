@@ -26,7 +26,7 @@ const Stats = () => {
           </div>
           <div className="glass-card rounded-2xl p-5 shadow-md text-center">
             <p className="font-heading text-base font-semibold text-foreground">เป้าหมาย</p>
-            <p className="font-heading text-xl font-bold text-muted-foreground mt-1">2,000 mg</p>
+            <p className="font-heading text-xl font-bold mt-1" style={{ color: "hsl(155 55% 40%)" }}>2,000 mg</p>
           </div>
         </div>
 
