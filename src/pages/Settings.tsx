@@ -87,7 +87,7 @@ const Settings = () => {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">ชื่อแอป</span>
-              <span className="text-sm font-semibold text-foreground font-body italic">Desalt DeNa</span>
+              <span className="text-sm font-semibold text-foreground font-body italic">Sodium Tracking</span>
             </div>
             <div className="border-t border-border" />
             <div className="flex items-center justify-between">
@@ -98,6 +98,11 @@ const Settings = () => {
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">พัฒนาโดย</span>
               <span className="text-sm font-semibold text-foreground">โครงงาน คณะเภสัชศาสตร์</span>
+            </div>
+            <div className="border-t border-border" />
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">เว็บไซต์</span>
+              <a href="https://www.DeSaltDeNa.com" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-primary hover:underline">www.DeSaltDeNa.com</a>
             </div>
             <div className="border-t border-border" />
             <p className="text-xs text-muted-foreground text-center pt-2 flex items-center justify-center gap-1">
