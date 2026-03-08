@@ -14,6 +14,8 @@ import FoodLog from "./pages/FoodLog";
 import FoodRecommend from "./pages/FoodRecommend";
 import Medicine from "./pages/Medicine";
 import Points from "./pages/Points";
+import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
