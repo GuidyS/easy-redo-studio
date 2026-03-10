@@ -217,7 +217,7 @@ const Medicine = () => {
                                       {item.image && (
                                         <img src={item.image} alt={item.name} className="w-full max-h-48 object-contain rounded-xl bg-secondary/30" />
                                       )}
-                                      <p className="text-xs text-muted-foreground leading-relaxed">{item.detail}</p>
+                                      <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">{item.detail}</p>
                                       {item.warning && (
                                         <div className="flex items-start gap-1.5 bg-destructive/10 rounded-lg p-2">
                                           <AlertTriangle className="h-3.5 w-3.5 text-destructive mt-0.5 shrink-0" />
