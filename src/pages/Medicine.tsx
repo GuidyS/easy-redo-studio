@@ -223,7 +223,7 @@ const Medicine = () => {
                                             {item.image && (
                                               <img src={item.image} alt={item.name} className="w-full max-h-48 object-contain rounded-xl bg-secondary/30" />
                                             )}
-                                            <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">ข้อบ่งใช้: {indication}</p>
+                                            
                                             {detailWithoutIndication && (
                                               <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">{detailWithoutIndication}</p>
                                             )}
