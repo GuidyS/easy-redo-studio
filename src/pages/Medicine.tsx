@@ -1,16 +1,27 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Pill, Leaf, ChevronRight, X, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Pill, Leaf, ChevronRight, X, AlertTriangle, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import infoNsaids from "@/assets/info-nsaids.jpg";
 import infoCorticosteroid from "@/assets/info-corticosteroid.jpg";
 import infoHerbs from "@/assets/info-herbs.jpg";
+import herbCatWhiskers from "@/assets/herb-cat-whiskers.jpg";
+import herbNoni from "@/assets/herb-noni.jpg";
+import herbLicorice from "@/assets/herb-licorice.jpg";
+import herbAristolochia from "@/assets/herb-aristolochia.jpg";
+import herbStarfruit from "@/assets/herb-starfruit.jpg";
+import herbSenna from "@/assets/herb-senna.jpg";
+import herbJengkol from "@/assets/herb-jengkol.jpg";
+import herbCordyceps from "@/assets/herb-cordyceps.jpg";
+import herbReishi from "@/assets/herb-reishi.jpg";
+import herbMorindaBael from "@/assets/herb-morinda-bael.jpg";
 
 type DetailItem = {
   name: string;
   detail: string;
   warning?: string;
+  image?: string;
 };
 
 type Category = {
