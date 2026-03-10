@@ -97,8 +97,8 @@ const categories: Category[] = [
 
 const Medicine = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [viewingImage, setViewingImage] = useState<string | null>(null);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
   return (
