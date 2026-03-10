@@ -1,16 +1,27 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Pill, Leaf, ChevronRight, X, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Pill, Leaf, ChevronRight, X, AlertTriangle, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
 import infoNsaids from "@/assets/info-nsaids.jpg";
 import infoCorticosteroid from "@/assets/info-corticosteroid.jpg";
 import infoHerbs from "@/assets/info-herbs.jpg";
+import herbCatWhiskers from "@/assets/herb-cat-whiskers.jpg";
+import herbNoni from "@/assets/herb-noni.jpg";
+import herbLicorice from "@/assets/herb-licorice.jpg";
+import herbAristolochia from "@/assets/herb-aristolochia.jpg";
+import herbStarfruit from "@/assets/herb-starfruit.jpg";
+import herbSenna from "@/assets/herb-senna.jpg";
+import herbJengkol from "@/assets/herb-jengkol.jpg";
+import herbCordyceps from "@/assets/herb-cordyceps.jpg";
+import herbReishi from "@/assets/herb-reishi.jpg";
+import herbMorindaBael from "@/assets/herb-morinda-bael.jpg";
 
 type DetailItem = {
   name: string;
   detail: string;
   warning?: string;
+  image?: string;
 };
 
 type Category = {
@@ -54,16 +65,16 @@ const categories: Category[] = [
     color: "from-[hsl(30,70%,55%)] to-[hsl(15,70%,55%)]",
     infographic: infoHerbs,
     items: [
-      { name: "หญ้าหนวดแมว", detail: "มีโพแทสเซียมสูง 5,000 มก./100 ก. ทำให้ไตทำงานหนักขึ้น", warning: "ไม่ควรรับประทานต่อเนื่องเกิน 2-4 สัปดาห์" },
-      { name: "ลูกยอ", detail: "มีโพแทสเซียมสูง ทำให้ไตทำงานหนักขึ้น", warning: "ห้ามรับประทานเกิน 120 มก./วัน" },
-      { name: "ชะเอมเทศ", detail: "มีสาร Glycyrrhizin ทำให้คอร์ติซอลเพิ่ม ไตดูดโซเดียมมาก อาจทำให้ไตวายเฉียบพลัน", warning: "ไม่ควรใช้ต่อเนื่องเกิน 4-6 สัปดาห์" },
-      { name: "ไคร้เครือ", detail: "ทำให้เกิดการอักเสบที่เนื้อเยื่อรอบไต เป็นพังผืด ทำให้เป็นโรคไตเรื้อรัง", warning: "ใช้ไม่เกิน 2-3 เดือน" },
-      { name: "มะเฟือง", detail: "มีสาร Caramboxin และ Oxalate อาจเป็นพิษต่อระบบประสาทและไตวายเฉียบพลัน", warning: "ไม่ควรรับประทานมากกว่า 2 ผล/วัน" },
-      { name: "มะขามแขก", detail: "มีสาร Sennoside ถูกขับออกทางไต ทำให้เกิดการสะสม", warning: "ไม่ควรรับประทานติดต่อกันเกิน 1 สัปดาห์" },
-      { name: "ลูกเนียง", detail: "มีสาร Jengkolic Acid ส่งผลให้อุดตันในท่อไต เกิดไตวายเฉียบพลัน", warning: "ไม่ควรรับประทานเกิน 1 ฝักใหญ่" },
-      { name: "ถังเช่า", detail: "บางผลิตภัณฑ์มีโลหะหนัก Arsenic สูง มีผลเสียต่อไตในระยะยาว", warning: "ควรรับประทาน 3-9 กรัม/วัน" },
-      { name: "เห็ดหลินจือ", detail: "ยังไม่มีข้อมูลทางการแพทย์เพียงพอเรื่องสรรพคุณต้านการอักเสบของไต", warning: "ไม่ควรรับประทานติดต่อกันเกิน 1 ปี" },
-      { name: "ใบยอ / มะตูม", detail: "มีโพแทสเซียมสูง ใบยอควรรับประทานแบบปรุงสุก", warning: "สัปดาห์ละ 2-3 ครั้งก็เพียงพอ" },
+      { name: "หญ้าหนวดแมว", detail: "มีโพแทสเซียมสูง 5,000 มก./100 ก. ทำให้ไตทำงานหนักขึ้น", warning: "ไม่ควรรับประทานต่อเนื่องเกิน 2-4 สัปดาห์", image: herbCatWhiskers },
+      { name: "ลูกยอ", detail: "มีโพแทสเซียมสูง ทำให้ไตทำงานหนักขึ้น", warning: "ห้ามรับประทานเกิน 120 มก./วัน", image: herbNoni },
+      { name: "ชะเอมเทศ", detail: "มีสาร Glycyrrhizin ทำให้คอร์ติซอลเพิ่ม ไตดูดโซเดียมมาก อาจทำให้ไตวายเฉียบพลัน", warning: "ไม่ควรใช้ต่อเนื่องเกิน 4-6 สัปดาห์", image: herbLicorice },
+      { name: "ไคร้เครือ", detail: "ทำให้เกิดการอักเสบที่เนื้อเยื่อรอบไต เป็นพังผืด ทำให้เป็นโรคไตเรื้อรัง", warning: "ใช้ไม่เกิน 2-3 เดือน", image: herbAristolochia },
+      { name: "มะเฟือง", detail: "มีสาร Caramboxin และ Oxalate อาจเป็นพิษต่อระบบประสาทและไตวายเฉียบพลัน", warning: "ไม่ควรรับประทานมากกว่า 2 ผล/วัน", image: herbStarfruit },
+      { name: "มะขามแขก", detail: "มีสาร Sennoside ถูกขับออกทางไต ทำให้เกิดการสะสม", warning: "ไม่ควรรับประทานติดต่อกันเกิน 1 สัปดาห์", image: herbSenna },
+      { name: "ลูกเนียง", detail: "มีสาร Jengkolic Acid ส่งผลให้อุดตันในท่อไต เกิดไตวายเฉียบพลัน", warning: "ไม่ควรรับประทานเกิน 1 ฝักใหญ่", image: herbJengkol },
+      { name: "ถังเช่า", detail: "บางผลิตภัณฑ์มีโลหะหนัก Arsenic สูง มีผลเสียต่อไตในระยะยาว", warning: "ควรรับประทาน 3-9 กรัม/วัน", image: herbCordyceps },
+      { name: "เห็ดหลินจือ", detail: "ยังไม่มีข้อมูลทางการแพทย์เพียงพอเรื่องสรรพคุณต้านการอักเสบของไต", warning: "ไม่ควรรับประทานติดต่อกันเกิน 1 ปี", image: herbReishi },
+      { name: "ใบยอ / มะตูม", detail: "มีโพแทสเซียมสูง ใบยอควรรับประทานแบบปรุงสุก", warning: "สัปดาห์ละ 2-3 ครั้งก็เพียงพอ", image: herbMorindaBael },
     ],
   },
 ];
@@ -72,6 +83,7 @@ const Medicine = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [viewingImage, setViewingImage] = useState<string | null>(null);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
   return (
     <PageLayout>
@@ -183,24 +195,63 @@ const Medicine = () => {
                 {/* Items List */}
                 <h3 className="font-heading text-base font-bold text-foreground">รายละเอียด</h3>
                 <div className="space-y-3">
-                  {selectedCategory.items.map((item, idx) => (
-                    <motion.div
-                      key={item.name}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className="bg-secondary/40 rounded-xl p-3.5 space-y-1.5"
-                    >
-                      <h4 className="font-heading text-sm font-bold text-foreground">{item.name}</h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{item.detail}</p>
-                      {item.warning && (
-                        <div className="flex items-start gap-1.5 bg-destructive/10 rounded-lg p-2">
-                          <AlertTriangle className="h-3.5 w-3.5 text-destructive mt-0.5 shrink-0" />
-                          <span className="text-xs text-destructive font-medium">{item.warning}</span>
+                  {selectedCategory.items.map((item, idx) => {
+                    const isExpanded = expandedItem === item.name;
+                    return (
+                      <motion.div
+                        key={item.name}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        className="bg-secondary/40 rounded-xl overflow-hidden cursor-pointer"
+                        onClick={() => setExpandedItem(isExpanded ? null : item.name)}
+                      >
+                        <div className="p-3.5 flex items-center gap-3">
+                          {item.image && (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="h-12 w-12 rounded-lg object-cover shrink-0"
+                            />
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-heading text-sm font-bold text-foreground">{item.name}</h4>
+                            <p className="text-xs text-muted-foreground truncate">{item.detail}</p>
+                          </div>
+                          <ChevronDown className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
                         </div>
-                      )}
-                    </motion.div>
-                  ))}
+
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="px-3.5 pb-3.5 space-y-2">
+                                {item.image && (
+                                  <img
+                                    src={item.image}
+                                    alt={item.name}
+                                    className="w-full h-40 object-cover rounded-xl"
+                                  />
+                                )}
+                                <p className="text-xs text-muted-foreground leading-relaxed">{item.detail}</p>
+                                {item.warning && (
+                                  <div className="flex items-start gap-1.5 bg-destructive/10 rounded-lg p-2">
+                                    <AlertTriangle className="h-3.5 w-3.5 text-destructive mt-0.5 shrink-0" />
+                                    <span className="text-xs text-destructive font-medium">{item.warning}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
