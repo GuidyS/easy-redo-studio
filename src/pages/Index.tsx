@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Droplets, User, Lock, Mail, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+import api from "@/lib/axios";
 
-const Index = () => {
+const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
