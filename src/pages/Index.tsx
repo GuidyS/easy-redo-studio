@@ -444,4 +444,4 @@ const Auth = () => {
   );
 };
 
-export default Index;
+export default Auth;
