@@ -31,6 +31,7 @@ const Auth = () => {
   ];
 
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const checkPasswordStrength = (pwd: string) => {
     const lengthCriteria = pwd.length >= 4;
