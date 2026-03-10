@@ -165,13 +165,19 @@ const Medicine = () => {
 
               {/* Content */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Infographic */}
-                <div className="rounded-2xl overflow-hidden shadow-md">
+                {/* Infographic - clickable */}
+                <div
+                  className="rounded-2xl overflow-hidden shadow-md cursor-pointer active:scale-[0.98] transition-transform"
+                  onClick={() => setViewingImage(selectedCategory.infographic)}
+                >
                   <img
                     src={selectedCategory.infographic}
                     alt={`Infographic ${selectedCategory.title}`}
                     className="w-full h-auto"
                   />
+                  <div className="bg-secondary/60 text-center py-1.5">
+                    <span className="text-xs text-muted-foreground">แตะเพื่อดูภาพขยาย</span>
+                  </div>
                 </div>
 
                 {/* Items List */}
