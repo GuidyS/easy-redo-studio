@@ -296,9 +296,9 @@ const Medicine = () => {
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-lg bg-card rounded-t-3xl max-h-[85vh] flex flex-col shadow-2xl"
             >
-              <div className={`bg-gradient-to-r ${selectedItem.category.color} p-5 rounded-t-3xl`}>
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="font-heading text-xl font-bold text-white">{selectedItem.item.name}</h2>
+              <div className={`bg-gradient-to-r ${selectedItem.category.color} p-4 rounded-t-3xl`}>
+                <div className="flex items-center justify-between">
+                  <h2 className="font-heading text-lg font-bold text-white">{selectedItem.item.name}</h2>
                   <button onClick={() => setSelectedItem(null)} className="text-white/70 hover:text-white bg-white/20 rounded-full p-1.5">
                     <X className="h-4 w-4" />
                   </button>
