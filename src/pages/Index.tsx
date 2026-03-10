@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Droplets, User, Lock, Mail, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+import api from "@/lib/axios";
 
-const Index = () => {
+const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
@@ -29,6 +31,7 @@ const Index = () => {
   ];
 
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const checkPasswordStrength = (pwd: string) => {
     const lengthCriteria = pwd.length >= 4;
@@ -59,42 +62,80 @@ const Index = () => {
   const passwordStatus = checkPasswordStrength(regPassword);
   const isPasswordMatch = regPassword === confirmPassword && confirmPassword !== "";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
-    
-    // ดักจับก่อนกดยืนยัน (เฉพาะตอนสมัครสมาชิก)
-    if (!isLogin) {
-        if (!fullName || !email || !gender || !age || !weight || !height || !regPassword || !confirmPassword || !role) {
-          setErrorMsg("กรุณากรอกข้อมูลให้ครบทุกช่อง");
-          return;
+
+    if (isLogin) {
+      // Login Logic
+      try {
+        const response = await api.post("/index.php?page=login", {
+          email: username,
+          password: password,
+        });
+        if (response.data.status === "success") {
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          navigate("/dashboard");
         }
-        if  (!genderOptions.includes(gender)) {
-          setErrorMsg("กรุณาเลือกเพศให้ถูกต้อง");
-          return;
+      } catch (error: any) {
+        const message = error.response?.data?.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ";
+        setErrorMsg(message);
+      }
+    } else {
+      // Register Validation
+      if (!fullName || !email || !gender || !age || !weight || !height || !regPassword || !confirmPassword || !role) {
+        setErrorMsg("กรุณากรอกข้อมูลให้ครบทุกช่อง");
+        return;
+      }
+      if (!genderOptions.includes(gender)) {
+        setErrorMsg("กรุณาเลือกเพศให้ถูกต้อง");
+        return;
+      }
+      if (!age || isNaN(Number(age)) || Number(age) < 1 || Number(age) > 100) {
+        setErrorMsg("กรุณากรอกอายุให้ถูกต้อง (1-100)");
+        return;
+      }
+      if (!height || isNaN(Number(height)) || Number(height) < 100) {
+        setErrorMsg("กรุณากรอกส่วนสูงให้ถูกต้อง (อย่างน้อย 100 cm)");
+        return;
+      }
+      if (!weight || isNaN(Number(weight)) || Number(weight) < 30) {
+        setErrorMsg("กรุณากรอกน้ำหนักให้ถูกต้อง (อย่างน้อย 30 kg)");
+        return;
+      }
+      if (!passwordStatus.isValid) {
+        setErrorMsg("กรุณาตั้งรหัสผ่านให้มีความยาวอย่างน้อย 4 ตัวอักษร");
+        return;
+      }
+      if (!isPasswordMatch) {
+        setErrorMsg("ยืนยันรหัสผ่านไม่ตรงกัน กรุณาตรวจสอบอีกครั้ง");
+        return;
+      }
+
+      // Register API Call
+      try {
+        const response = await api.post("/index.php?page=register", {
+          full_name: fullName,
+          email: email,
+          password: regPassword,
+          gender: gender,
+          age: age,
+          weight_kg: weight,
+          height_cm: height,
+          user_role: role,
+        });
+        if (response.data.status === "success") {
+          setIsLogin(true);
+          toast({
+            title: "สมัครสมาชิกสำเร็จ!",
+            description: "กรุณาเข้าสู่ระบบเพื่อใช้งานต่อ",
+          });
         }
-        if (!age || isNaN(Number(age)) || Number(age) < 1 || Number(age) > 100) {
-          setErrorMsg("กรุณากรอกอายุให้ถูกต้อง (1-100)");
-          return;
-        }
-        if (!height || isNaN(Number(height)) || Number(height) < 100) {
-          setErrorMsg("กรุณากรอกส่วนสูงให้ถูกต้อง (อย่างน้อย 100 cm)");
-          return;
-        }
-        if (!weight || isNaN(Number(weight)) || Number(weight) < 30) {
-          setErrorMsg("กรุณากรอกน้ำหนักให้ถูกต้อง (อย่างน้อย 30 kg)");
-          return;
-        }
-        if (!passwordStatus.isValid) {
-            setErrorMsg("กรุณาตั้งรหัสผ่านให้มีความยาวอย่างน้อย 4 ตัวอักษร");
-            return;
-        }
-        if (!isPasswordMatch) {
-            setErrorMsg("ยืนยันรหัสผ่านไม่ตรงกัน กรุณาตรวจสอบอีกครั้ง");
-            return;
-        }
+      } catch (error: any) {
+        const message = error.response?.data?.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก";
+        setErrorMsg(message);
+      }
     }
-    navigate("/splash");
   };
 
   const inputClass =
@@ -347,7 +388,7 @@ const Index = () => {
           )}
 
           {/* Error Message */}
-          {errorMsg && !isLogin && (
+          {errorMsg && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -404,4 +445,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Auth;
