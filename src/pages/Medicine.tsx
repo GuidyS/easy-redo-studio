@@ -143,15 +143,15 @@ const Medicine = () => {
                   <p className="mt-1 text-xs text-white/80">{cat.description}</p>
                 </div>
                 <div className="p-3">
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex overflow-x-auto gap-2 pb-1 scrollbar-hide">
                     {cat.items.map((item) => (
-                      <span
+                      <button
                         key={item.name}
                         onClick={() => setSelectedItem({ item, category: cat })}
-                        className="text-xs bg-secondary/60 text-foreground rounded-full px-2.5 py-1 cursor-pointer hover:bg-secondary active:scale-95 transition-all"
+                        className="text-xs bg-secondary/60 text-foreground rounded-full px-3.5 py-2 min-h-[36px] whitespace-nowrap cursor-pointer hover:bg-secondary active:scale-95 transition-all shrink-0"
                       >
                         {item.name}
-                      </span>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -296,9 +296,9 @@ const Medicine = () => {
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-lg bg-card rounded-t-3xl max-h-[85vh] flex flex-col shadow-2xl"
             >
-              <div className={`bg-gradient-to-r ${selectedItem.category.color} p-5 rounded-t-3xl`}>
-                <div className="flex items-center justify-between mb-2">
-                  <h2 className="font-heading text-xl font-bold text-white">{selectedItem.item.name}</h2>
+              <div className={`bg-gradient-to-r ${selectedItem.category.color} p-4 rounded-t-3xl`}>
+                <div className="flex items-center justify-between">
+                  <h2 className="font-heading text-lg font-bold text-white">{selectedItem.item.name}</h2>
                   <button onClick={() => setSelectedItem(null)} className="text-white/70 hover:text-white bg-white/20 rounded-full p-1.5">
                     <X className="h-4 w-4" />
                   </button>
