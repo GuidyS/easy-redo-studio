@@ -207,6 +207,35 @@ const Medicine = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Image Lightbox */}
+      <AnimatePresence>
+        {viewingImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setViewingImage(null)}
+          >
+            <button
+              onClick={() => setViewingImage(null)}
+              className="absolute top-4 right-4 text-white/70 hover:text-white bg-white/20 rounded-full p-2 z-10"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <motion.img
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              src={viewingImage}
+              alt="Infographic"
+              className="max-w-full max-h-[90vh] object-contain rounded-xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageLayout>
   );
 };
