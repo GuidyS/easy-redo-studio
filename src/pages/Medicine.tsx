@@ -71,6 +71,7 @@ const categories: Category[] = [
 const Medicine = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [viewingImage, setViewingImage] = useState<string | null>(null);
 
   return (
     <PageLayout>
@@ -164,13 +165,19 @@ const Medicine = () => {
 
               {/* Content */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Infographic */}
-                <div className="rounded-2xl overflow-hidden shadow-md">
+                {/* Infographic - clickable */}
+                <div
+                  className="rounded-2xl overflow-hidden shadow-md cursor-pointer active:scale-[0.98] transition-transform"
+                  onClick={() => setViewingImage(selectedCategory.infographic)}
+                >
                   <img
                     src={selectedCategory.infographic}
                     alt={`Infographic ${selectedCategory.title}`}
                     className="w-full h-auto"
                   />
+                  <div className="bg-secondary/60 text-center py-1.5">
+                    <span className="text-xs text-muted-foreground">แตะเพื่อดูภาพขยาย</span>
+                  </div>
                 </div>
 
                 {/* Items List */}
@@ -197,6 +204,35 @@ const Medicine = () => {
                 </div>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Image Lightbox */}
+      <AnimatePresence>
+        {viewingImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setViewingImage(null)}
+          >
+            <button
+              onClick={() => setViewingImage(null)}
+              className="absolute top-4 right-4 text-white/70 hover:text-white bg-white/20 rounded-full p-2 z-10"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <motion.img
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              src={viewingImage}
+              alt="Infographic"
+              className="max-w-full max-h-[90vh] object-contain rounded-xl"
+              onClick={(e) => e.stopPropagation()}
+            />
           </motion.div>
         )}
       </AnimatePresence>
