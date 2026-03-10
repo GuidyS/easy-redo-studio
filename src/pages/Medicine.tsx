@@ -127,10 +127,12 @@ const Medicine = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                onClick={() => setSelectedCategory(cat)}
-                className="glass-card rounded-2xl overflow-hidden shadow-md cursor-pointer active:scale-[0.98] transition-transform"
+                className="glass-card rounded-2xl overflow-hidden shadow-md"
               >
-                <div className={`bg-gradient-to-r ${cat.color} p-4`}>
+                <div
+                  className={`bg-gradient-to-r ${cat.color} p-4 cursor-pointer active:scale-[0.98] transition-transform`}
+                  onClick={() => setViewingImage(cat.infographic)}
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Icon className="h-6 w-6 text-white" />
@@ -142,16 +144,15 @@ const Medicine = () => {
                 </div>
                 <div className="p-3">
                   <div className="flex flex-wrap gap-1.5">
-                    {cat.items.slice(0, 4).map((item) => (
-                      <span key={item.name} className="text-xs bg-secondary/60 text-foreground rounded-full px-2.5 py-1">
+                    {cat.items.map((item) => (
+                      <span
+                        key={item.name}
+                        onClick={() => setSelectedItem({ item, category: cat })}
+                        className="text-xs bg-secondary/60 text-foreground rounded-full px-2.5 py-1 cursor-pointer hover:bg-secondary active:scale-95 transition-all"
+                      >
                         {item.name}
                       </span>
                     ))}
-                    {cat.items.length > 4 && (
-                      <span className="text-xs bg-secondary/60 text-muted-foreground rounded-full px-2.5 py-1">
-                        +{cat.items.length - 4} รายการ
-                      </span>
-                    )}
                   </div>
                 </div>
               </motion.div>
