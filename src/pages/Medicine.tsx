@@ -30,6 +30,7 @@ import herbMorindaBael from "@/assets/herb-morinda-bael.jpg";
 type DetailItem = {
   name: string;
   detail: string;
+  pros?: string;
   warning?: string;
   image?: string;
 };
