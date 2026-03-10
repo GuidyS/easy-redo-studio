@@ -6,6 +6,16 @@ import PageLayout from "@/components/PageLayout";
 import infoNsaids from "@/assets/info-nsaids.jpg";
 import infoCorticosteroid from "@/assets/info-corticosteroid.jpg";
 import infoHerbs from "@/assets/info-herbs.jpg";
+import drugAspirin from "@/assets/drug-aspirin.png";
+import drugIbuprofen from "@/assets/drug-ibuprofen.png";
+import drugNaproxen from "@/assets/drug-naproxen.png";
+import drugCelecoxib from "@/assets/drug-celecoxib.png";
+import drugDiclofenac from "@/assets/drug-diclofenac.png";
+import drugEtoricoxib from "@/assets/drug-etoricoxib.png";
+import drugPiroxicam from "@/assets/drug-piroxicam.png";
+import drugMeloxicam from "@/assets/drug-meloxicam.png";
+import drugMefenamic from "@/assets/drug-mefenamic.png";
+import drugIndomethacin from "@/assets/drug-indomethacin.png";
 import herbCatWhiskers from "@/assets/herb-cat-whiskers.jpg";
 import herbNoni from "@/assets/herb-noni.jpg";
 import herbLicorice from "@/assets/herb-licorice.jpg";
@@ -41,10 +51,16 @@ const categories: Category[] = [
     color: "from-[hsl(255,60%,65%)] to-[hsl(280,60%,60%)]",
     infographic: infoNsaids,
     items: [
-      { name: "Aspirin", detail: "ยาแก้ปวด ลดไข้ ต้านการอักเสบ อาจทำให้ไตเสียหายหากใช้ต่อเนื่อง", warning: "หลีกเลี่ยงการใช้ในระยะยาว" },
-      { name: "Ibuprofen", detail: "ยาแก้ปวดที่ใช้บ่อย ลดการไหลเวียนเลือดไปที่ไต อาจทำให้ไตวายเฉียบพลัน", warning: "ไม่ควรใช้ติดต่อกันเกิน 10 วัน" },
-      { name: "Naproxen", detail: "ยาแก้ปวดลดอักเสบ มีผลต่อไตคล้าย Ibuprofen", warning: "ระวังในผู้ป่วยโรคไต" },
-      { name: "Celecoxib", detail: "ยาต้านอักเสบกลุ่ม COX-2 inhibitor อาจส่งผลต่อการทำงานของไต", warning: "ปรึกษาแพทย์ก่อนใช้" },
+      { name: "Aspirin", detail: "ยาแก้ปวด ลดไข้ ต้านการอักเสบ อาจทำให้ไตเสียหายหากใช้ต่อเนื่อง", warning: "หลีกเลี่ยงการใช้ในระยะยาว", image: drugAspirin },
+      { name: "Ibuprofen", detail: "ยาแก้ปวดที่ใช้บ่อย ลดการไหลเวียนเลือดไปที่ไต อาจทำให้ไตวายเฉียบพลัน", warning: "ไม่ควรใช้ติดต่อกันเกิน 10 วัน", image: drugIbuprofen },
+      { name: "Naproxen", detail: "ยาแก้ปวดลดอักเสบ มีผลต่อไตคล้าย Ibuprofen", warning: "ระวังในผู้ป่วยโรคไต", image: drugNaproxen },
+      { name: "Celecoxib", detail: "ยาต้านอักเสบกลุ่ม COX-2 inhibitor อาจส่งผลต่อการทำงานของไต", warning: "ปรึกษาแพทย์ก่อนใช้", image: drugCelecoxib },
+      { name: "Diclofenac", detail: "ยาแก้ปวดลดอักเสบ อาจทำให้เกิดภาวะไตวายเฉียบพลันและเรื้อรัง", warning: "ไม่ควรใช้ในผู้ป่วยโรคไต", image: drugDiclofenac },
+      { name: "Etoricoxib", detail: "ยาต้านอักเสบกลุ่ม COX-2 inhibitor อาจเพิ่มความดันโลหิตและส่งผลต่อไต", warning: "ปรึกษาแพทย์ก่อนใช้", image: drugEtoricoxib },
+      { name: "Piroxicam", detail: "ยาแก้ปวดลดอักเสบที่ออกฤทธิ์นาน อาจส่งผลต่อการทำงานของไต", warning: "ไม่ควรใช้ติดต่อกันนาน", image: drugPiroxicam },
+      { name: "Meloxicam", detail: "ยาแก้ปวดลดอักเสบ อาจลดการไหลเวียนเลือดไปที่ไต", warning: "ระวังในผู้ป่วยที่มีปัญหาไต", image: drugMeloxicam },
+      { name: "Mefenamic acid", detail: "ยาแก้ปวดลดอักเสบ ใช้บ่อยสำหรับปวดประจำเดือน อาจส่งผลต่อไต", warning: "ไม่ควรใช้ติดต่อกันเกิน 7 วัน", image: drugMefenamic },
+      { name: "Indomethacin", detail: "ยาแก้ปวดลดอักเสบที่มีฤทธิ์แรง อาจทำให้ไตวายเฉียบพลัน", warning: "ใช้ตามแพทย์สั่งเท่านั้น", image: drugIndomethacin },
     ],
   },
   {
