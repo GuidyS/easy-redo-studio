@@ -143,7 +143,7 @@ const Medicine = () => {
                   <p className="mt-1 text-xs text-white/80">{cat.description}</p>
                 </div>
                 <div className="p-3">
-                  <div className="flex flex-wrap gap-2 pb-1">
+                  <div className="flex overflow-x-auto gap-2 pb-1 scrollbar-hide">
                     {cat.items.map((item) => (
                       <button
                         key={item.name}
