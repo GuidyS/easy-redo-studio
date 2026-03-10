@@ -251,7 +251,8 @@ const Medicine = () => {
                                   <img
                                     src={item.image}
                                     alt={item.name}
-                                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30"
+                                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30 cursor-pointer active:scale-[0.98] transition-transform"
+                                    onClick={(e) => { e.stopPropagation(); setViewingImage(item.image!); }}
                                   />
                                 )}
                                 <p className="text-xs text-muted-foreground leading-relaxed">{item.detail}</p>
