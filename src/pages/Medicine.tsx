@@ -98,7 +98,6 @@ const categories: Category[] = [
 const Medicine = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-  const [selectedItem, setSelectedItem] = useState<{ item: DetailItem; category: Category } | null>(null);
   const [viewingImage, setViewingImage] = useState<string | null>(null);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
@@ -127,12 +126,10 @@ const Medicine = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="glass-card rounded-2xl overflow-hidden shadow-md"
+                onClick={() => setSelectedCategory(cat)}
+                className="glass-card rounded-2xl overflow-hidden shadow-md cursor-pointer active:scale-[0.98] transition-transform"
               >
-                <div
-                  className={`bg-gradient-to-r ${cat.color} p-4 cursor-pointer active:scale-[0.98] transition-transform`}
-                  onClick={() => setViewingImage(cat.infographic)}
-                >
+                <div className={`bg-gradient-to-r ${cat.color} p-4`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Icon className="h-6 w-6 text-white" />
@@ -143,16 +140,17 @@ const Medicine = () => {
                   <p className="mt-1 text-xs text-white/80">{cat.description}</p>
                 </div>
                 <div className="p-3">
-                  <div className="flex overflow-x-auto gap-2 pb-1 scrollbar-hide">
-                    {cat.items.map((item) => (
-                      <button
-                        key={item.name}
-                        onClick={() => setSelectedItem({ item, category: cat })}
-                        className="text-xs bg-secondary/60 text-foreground rounded-full px-3.5 py-2 min-h-[36px] whitespace-nowrap cursor-pointer hover:bg-secondary active:scale-95 transition-all shrink-0"
-                      >
+                  <div className="flex flex-wrap gap-1.5">
+                    {cat.items.slice(0, 4).map((item) => (
+                      <span key={item.name} className="text-xs bg-secondary/60 text-foreground rounded-full px-2.5 py-1">
                         {item.name}
-                      </button>
+                      </span>
                     ))}
+                    {cat.items.length > 4 && (
+                      <span className="text-xs bg-secondary/60 text-muted-foreground rounded-full px-2.5 py-1">
+                        +{cat.items.length - 4} รายการ
+                      </span>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -253,8 +251,7 @@ const Medicine = () => {
                                   <img
                                     src={item.image}
                                     alt={item.name}
-                                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30 cursor-pointer active:scale-[0.98] transition-transform"
-                                    onClick={(e) => { e.stopPropagation(); setViewingImage(item.image!); }}
+                                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30"
                                   />
                                 )}
                                 <p className="text-xs text-muted-foreground leading-relaxed">{item.detail}</p>
@@ -278,54 +275,7 @@ const Medicine = () => {
         )}
       </AnimatePresence>
 
-      {/* Single Item Modal */}
-      <AnimatePresence>
-        {selectedItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/50 flex items-end justify-center"
-            onClick={() => setSelectedItem(null)}
-          >
-            <motion.div
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-lg bg-card rounded-t-3xl max-h-[85vh] flex flex-col shadow-2xl"
-            >
-              <div className={`bg-gradient-to-r ${selectedItem.category.color} p-4 rounded-t-3xl`}>
-                <div className="flex items-center justify-between">
-                  <h2 className="font-heading text-lg font-bold text-white">{selectedItem.item.name}</h2>
-                  <button onClick={() => setSelectedItem(null)} className="text-white/70 hover:text-white bg-white/20 rounded-full p-1.5">
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-              <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                {selectedItem.item.image && (
-                  <img
-                    src={selectedItem.item.image}
-                    alt={selectedItem.item.name}
-                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30 cursor-pointer active:scale-[0.98] transition-transform"
-                    onClick={() => setViewingImage(selectedItem.item.image!)}
-                  />
-                )}
-                <p className="text-sm text-muted-foreground leading-relaxed">{selectedItem.item.detail}</p>
-                {selectedItem.item.warning && (
-                  <div className="flex items-start gap-2 bg-destructive/10 rounded-lg p-3">
-                    <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
-                    <span className="text-sm text-destructive font-medium">{selectedItem.item.warning}</span>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
+      {/* Image Lightbox */}
       <AnimatePresence>
         {viewingImage && (
           <motion.div
