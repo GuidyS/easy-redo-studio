@@ -194,40 +194,52 @@ const Medicine = () => {
                                 setExpandedItem(isItemExpanded ? null : item.name);
                               }}
                             >
-                              <div className="p-3 flex items-center gap-3">
-                                {item.image && (
-                                  <img src={item.image} alt={item.name} className="h-10 w-10 rounded-lg object-cover shrink-0" />
-                                )}
-                                <div className="flex-1 min-w-0">
-                                  <h4 className="font-heading text-sm font-bold text-foreground">{item.name}</h4>
-                                  <p className="text-xs text-muted-foreground truncate">{item.detail}</p>
-                                </div>
-                                <ChevronDown className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${isItemExpanded ? "rotate-180" : ""}`} />
-                              </div>
-                              <AnimatePresence>
-                                {isItemExpanded && (
-                                  <motion.div
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: "auto", opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="overflow-hidden"
-                                  >
-                                    <div className="px-3 pb-3 space-y-2">
+                              {(() => {
+                                const indicationMatch = item.detail.match(/ข้อบ่งใช้:\s*(.*?)(?=\n\n|$)/s);
+                                const indication = indicationMatch ? indicationMatch[1].trim() : item.detail;
+                                const detailWithoutIndication = item.detail.replace(/ข้อบ่งใช้:.*?(?=\n\n|$)/s, '').replace(/^\n+/, '').trim();
+                                return (
+                                  <>
+                                    <div className="p-3 flex items-center gap-3">
                                       {item.image && (
-                                        <img src={item.image} alt={item.name} className="w-full max-h-48 object-contain rounded-xl bg-secondary/30" />
+                                        <img src={item.image} alt={item.name} className="h-10 w-10 rounded-lg object-cover shrink-0" />
                                       )}
-                                      <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">{item.detail}</p>
-                                      {item.warning && (
-                                        <div className="flex items-start gap-1.5 bg-destructive/10 rounded-lg p-2">
-                                          <AlertTriangle className="h-3.5 w-3.5 text-destructive mt-0.5 shrink-0" />
-                                          <span className="text-xs text-destructive font-medium">{item.warning}</span>
-                                        </div>
-                                      )}
+                                      <div className="flex-1 min-w-0">
+                                        <h4 className="font-heading text-sm font-bold text-foreground">{item.name}</h4>
+                                        <p className="text-xs text-muted-foreground truncate">ข้อบ่งใช้: {indication}</p>
+                                      </div>
+                                      <ChevronDown className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${isItemExpanded ? "rotate-180" : ""}`} />
                                     </div>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
+                                    <AnimatePresence>
+                                      {isItemExpanded && (
+                                        <motion.div
+                                          initial={{ height: 0, opacity: 0 }}
+                                          animate={{ height: "auto", opacity: 1 }}
+                                          exit={{ height: 0, opacity: 0 }}
+                                          transition={{ duration: 0.2 }}
+                                          className="overflow-hidden"
+                                        >
+                                          <div className="px-3 pb-3 space-y-2">
+                                            {item.image && (
+                                              <img src={item.image} alt={item.name} className="w-full max-h-48 object-contain rounded-xl bg-secondary/30" />
+                                            )}
+                                            <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">ข้อบ่งใช้: {indication}</p>
+                                            {detailWithoutIndication && (
+                                              <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">{detailWithoutIndication}</p>
+                                            )}
+                                            {item.warning && (
+                                              <div className="flex items-start gap-1.5 bg-destructive/10 rounded-lg p-2">
+                                                <AlertTriangle className="h-3.5 w-3.5 text-destructive mt-0.5 shrink-0" />
+                                                <span className="text-xs text-destructive font-medium">{item.warning}</span>
+                                              </div>
+                                            )}
+                                          </div>
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+                                  </>
+                                );
+                              })()}
                             </motion.div>
                           );
                         })}
