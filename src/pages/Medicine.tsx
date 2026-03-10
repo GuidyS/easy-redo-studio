@@ -127,12 +127,10 @@ const Medicine = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="glass-card rounded-2xl overflow-hidden shadow-md"
+                onClick={() => setSelectedCategory(cat)}
+                className="glass-card rounded-2xl overflow-hidden shadow-md cursor-pointer active:scale-[0.98] transition-transform"
               >
-                <div
-                  className={`bg-gradient-to-r ${cat.color} p-4 cursor-pointer active:scale-[0.98] transition-transform`}
-                  onClick={() => setViewingImage(cat.infographic)}
-                >
+                <div className={`bg-gradient-to-r ${cat.color} p-4`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Icon className="h-6 w-6 text-white" />
@@ -144,15 +142,16 @@ const Medicine = () => {
                 </div>
                 <div className="p-3">
                   <div className="flex flex-wrap gap-1.5">
-                    {cat.items.map((item) => (
-                      <span
-                        key={item.name}
-                        onClick={() => setSelectedItem({ item, category: cat })}
-                        className="text-xs bg-secondary/60 text-foreground rounded-full px-2.5 py-1 cursor-pointer hover:bg-secondary active:scale-95 transition-all"
-                      >
+                    {cat.items.slice(0, 4).map((item) => (
+                      <span key={item.name} className="text-xs bg-secondary/60 text-foreground rounded-full px-2.5 py-1">
                         {item.name}
                       </span>
                     ))}
+                    {cat.items.length > 4 && (
+                      <span className="text-xs bg-secondary/60 text-muted-foreground rounded-full px-2.5 py-1">
+                        +{cat.items.length - 4} รายการ
+                      </span>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -212,65 +211,32 @@ const Medicine = () => {
 
                 {/* Items List */}
                 <h3 className="font-heading text-base font-bold text-foreground">รายละเอียด</h3>
-                <div className="space-y-3">
-                  {selectedCategory.items.map((item, idx) => {
-                    const isExpanded = expandedItem === item.name;
-                    return (
-                      <motion.div
-                        key={item.name}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.05 }}
-                        className="bg-secondary/40 rounded-xl overflow-hidden cursor-pointer"
-                        onClick={() => setExpandedItem(isExpanded ? null : item.name)}
-                      >
-                        <div className="p-3.5 flex items-center gap-3">
-                          {item.image && (
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="h-12 w-12 rounded-lg object-cover shrink-0"
-                            />
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-heading text-sm font-bold text-foreground">{item.name}</h4>
-                            <p className="text-xs text-muted-foreground truncate">{item.detail}</p>
-                          </div>
-                          <ChevronDown className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
+                <div className="space-y-2">
+                  {selectedCategory.items.map((item, idx) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                      className="bg-secondary/40 rounded-xl cursor-pointer active:scale-[0.98] transition-transform"
+                      onClick={() => setSelectedItem({ item, category: selectedCategory })}
+                    >
+                      <div className="p-3.5 flex items-center gap-3">
+                        {item.image && (
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-12 w-12 rounded-lg object-cover shrink-0"
+                          />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-heading text-sm font-bold text-foreground">{item.name}</h4>
+                          <p className="text-xs text-muted-foreground truncate">{item.detail}</p>
                         </div>
-
-                        <AnimatePresence>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="overflow-hidden"
-                            >
-                              <div className="px-3.5 pb-3.5 space-y-2">
-                                {item.image && (
-                                  <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30 cursor-pointer active:scale-[0.98] transition-transform"
-                                    onClick={(e) => { e.stopPropagation(); setViewingImage(item.image!); }}
-                                  />
-                                )}
-                                <p className="text-xs text-muted-foreground leading-relaxed">{item.detail}</p>
-                                {item.warning && (
-                                  <div className="flex items-start gap-1.5 bg-destructive/10 rounded-lg p-2">
-                                    <AlertTriangle className="h-3.5 w-3.5 text-destructive mt-0.5 shrink-0" />
-                                    <span className="text-xs text-destructive font-medium">{item.warning}</span>
-                                  </div>
-                                )}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </motion.div>
-                    );
-                  })}
+                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </motion.div>
