@@ -143,15 +143,15 @@ const Medicine = () => {
                   <p className="mt-1 text-xs text-white/80">{cat.description}</p>
                 </div>
                 <div className="p-3">
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex overflow-x-auto gap-2 pb-1 scrollbar-hide">
                     {cat.items.map((item) => (
-                      <span
+                      <button
                         key={item.name}
                         onClick={() => setSelectedItem({ item, category: cat })}
-                        className="text-xs bg-secondary/60 text-foreground rounded-full px-2.5 py-1 cursor-pointer hover:bg-secondary active:scale-95 transition-all"
+                        className="text-xs bg-secondary/60 text-foreground rounded-full px-3.5 py-2 min-h-[36px] whitespace-nowrap cursor-pointer hover:bg-secondary active:scale-95 transition-all shrink-0"
                       >
                         {item.name}
-                      </span>
+                      </button>
                     ))}
                   </div>
                 </div>
