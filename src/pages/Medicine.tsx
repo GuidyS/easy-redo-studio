@@ -211,65 +211,32 @@ const Medicine = () => {
 
                 {/* Items List */}
                 <h3 className="font-heading text-base font-bold text-foreground">รายละเอียด</h3>
-                <div className="space-y-3">
-                  {selectedCategory.items.map((item, idx) => {
-                    const isExpanded = expandedItem === item.name;
-                    return (
-                      <motion.div
-                        key={item.name}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.05 }}
-                        className="bg-secondary/40 rounded-xl overflow-hidden cursor-pointer"
-                        onClick={() => setExpandedItem(isExpanded ? null : item.name)}
-                      >
-                        <div className="p-3.5 flex items-center gap-3">
-                          {item.image && (
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="h-12 w-12 rounded-lg object-cover shrink-0"
-                            />
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-heading text-sm font-bold text-foreground">{item.name}</h4>
-                            <p className="text-xs text-muted-foreground truncate">{item.detail}</p>
-                          </div>
-                          <ChevronDown className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
+                <div className="space-y-2">
+                  {selectedCategory.items.map((item, idx) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                      className="bg-secondary/40 rounded-xl cursor-pointer active:scale-[0.98] transition-transform"
+                      onClick={() => setSelectedItem({ item, category: selectedCategory })}
+                    >
+                      <div className="p-3.5 flex items-center gap-3">
+                        {item.image && (
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-12 w-12 rounded-lg object-cover shrink-0"
+                          />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-heading text-sm font-bold text-foreground">{item.name}</h4>
+                          <p className="text-xs text-muted-foreground truncate">{item.detail}</p>
                         </div>
-
-                        <AnimatePresence>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="overflow-hidden"
-                            >
-                              <div className="px-3.5 pb-3.5 space-y-2">
-                                {item.image && (
-                                  <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30 cursor-pointer active:scale-[0.98] transition-transform"
-                                    onClick={(e) => { e.stopPropagation(); setViewingImage(item.image!); }}
-                                  />
-                                )}
-                                <p className="text-xs text-muted-foreground leading-relaxed">{item.detail}</p>
-                                {item.warning && (
-                                  <div className="flex items-start gap-1.5 bg-destructive/10 rounded-lg p-2">
-                                    <AlertTriangle className="h-3.5 w-3.5 text-destructive mt-0.5 shrink-0" />
-                                    <span className="text-xs text-destructive font-medium">{item.warning}</span>
-                                  </div>
-                                )}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </motion.div>
-                    );
-                  })}
+                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </motion.div>
