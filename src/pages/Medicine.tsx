@@ -278,7 +278,54 @@ const Medicine = () => {
         )}
       </AnimatePresence>
 
-      {/* Image Lightbox */}
+      {/* Single Item Modal */}
+      <AnimatePresence>
+        {selectedItem && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/50 flex items-end justify-center"
+            onClick={() => setSelectedItem(null)}
+          >
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg bg-card rounded-t-3xl max-h-[85vh] flex flex-col shadow-2xl"
+            >
+              <div className={`bg-gradient-to-r ${selectedItem.category.color} p-5 rounded-t-3xl`}>
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="font-heading text-xl font-bold text-white">{selectedItem.item.name}</h2>
+                  <button onClick={() => setSelectedItem(null)} className="text-white/70 hover:text-white bg-white/20 rounded-full p-1.5">
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                {selectedItem.item.image && (
+                  <img
+                    src={selectedItem.item.image}
+                    alt={selectedItem.item.name}
+                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30 cursor-pointer active:scale-[0.98] transition-transform"
+                    onClick={() => setViewingImage(selectedItem.item.image!)}
+                  />
+                )}
+                <p className="text-sm text-muted-foreground leading-relaxed">{selectedItem.item.detail}</p>
+                {selectedItem.item.warning && (
+                  <div className="flex items-start gap-2 bg-destructive/10 rounded-lg p-3">
+                    <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
+                    <span className="text-sm text-destructive font-medium">{selectedItem.item.warning}</span>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {viewingImage && (
           <motion.div
