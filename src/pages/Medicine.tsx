@@ -235,7 +235,7 @@ const Medicine = () => {
                                   <img
                                     src={item.image}
                                     alt={item.name}
-                                    className="w-full h-40 object-cover rounded-xl"
+                                    className="w-full max-h-56 object-contain rounded-xl bg-secondary/30"
                                   />
                                 )}
                                 <p className="text-xs text-muted-foreground leading-relaxed">{item.detail}</p>
