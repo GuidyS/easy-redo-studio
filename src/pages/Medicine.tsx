@@ -239,6 +239,7 @@ const Medicine = () => {
             );
           })}
         </div>
+      </motion.div>
 
       {/* Image Lightbox */}
       <AnimatePresence>
