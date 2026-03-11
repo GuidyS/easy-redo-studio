@@ -1,21 +1,21 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, Plus } from "lucide-react";
+import { AlertTriangle, CheckCircle, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
+import { useFoodLog } from "@/contexts/FoodLogContext";
 
-const todayFoods = [
-  { name: "ผัดไทย", meal: "มื้อเช้า", sodium: 500, color: "bg-amber-200" },
-  { name: "ผัดผักบุ้ง", meal: "มื้อเช้า", sodium: 1000, color: "bg-amber-200" },
-  { name: "แกงเขียวหวาน", meal: "มื้อเช้า", sodium: 1000, color: "bg-amber-200" },
-  { name: "ผัดไทย", meal: "มื้อกลางวัน", sodium: 500, color: "bg-sky-200" },
-  { name: "ผัดผักบุ้ง", meal: "มื้อกลางวัน", sodium: 1000, color: "bg-sky-200" },
-  { name: "แกงเขียวหวาน", meal: "มื้อกลางวัน", sodium: 1000, color: "bg-sky-200" },
-  { name: "ผัดไทย", meal: "มื้อเย็น", sodium: 500, color: "bg-purple-200" },
-  { name: "ผัดผักบุ้ง", meal: "มื้อเย็น", sodium: 1000, color: "bg-purple-200" },
-  { name: "แกงเขียวหวาน", meal: "มื้อเย็น", sodium: 1000, color: "bg-purple-200" },
-];
+const mealColors: Record<string, string> = {
+  breakfast: "bg-amber-200",
+  lunch: "bg-sky-200",
+  dinner: "bg-purple-200",
+};
 
 const DailyTracking = () => {
-  const totalSodium = todayFoods.reduce((sum, f) => sum + f.sodium, 0);
+  const navigate = useNavigate();
+  const { getTodayEntries, getTodayTotal } = useFoodLog();
+
+  const todayFoods = getTodayEntries();
+  const totalSodium = getTodayTotal();
   const limit = 2000;
   const isOver = totalSodium > limit;
 
@@ -31,29 +31,59 @@ const DailyTracking = () => {
           <h2 className="font-heading text-lg font-bold text-foreground">
             อาหารที่คุณรับประทานไปวันนี้
           </h2>
-          <button className="flex items-center gap-1 rounded-xl bg-secondary px-3 py-2 text-xs font-semibold text-foreground">
+          <button
+            onClick={() => navigate("/food-log")}
+            className="flex items-center gap-1 rounded-xl bg-secondary px-3 py-2 text-xs font-semibold text-foreground"
+          >
             <Plus className="h-4 w-4" />
             เพิ่มรายการอาหาร
           </button>
         </div>
 
         {/* Status banner */}
-        {isOver && (
+        {todayFoods.length > 0 && (
           <motion.div
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
-            className="flex items-center justify-between rounded-2xl bg-red-100 p-4"
+            className={`flex items-center justify-between rounded-2xl p-4 ${
+              isOver ? "bg-red-100" : "bg-green-100"
+            }`}
           >
             <div className="flex items-center gap-3">
-              <AlertTriangle className="h-8 w-8 text-destructive" />
+              {isOver ? (
+                <AlertTriangle className="h-8 w-8 text-destructive" />
+              ) : (
+                <CheckCircle className="h-8 w-8 text-green-600" />
+              )}
               <div>
-                <p className="font-heading font-bold text-destructive">เกินกว่ากำหนด !</p>
-                <p className="text-xs text-destructive/70">เป้าหมายของคุณคือ {limit.toLocaleString()} mg/วัน</p>
+                <p className={`font-heading font-bold ${isOver ? "text-destructive" : "text-green-700"}`}>
+                  {isOver ? "เกินกว่ากำหนด !" : "อยู่ในเกณฑ์ดี"}
+                </p>
+                <p className={`text-xs ${isOver ? "text-destructive/70" : "text-green-600/70"}`}>
+                  เป้าหมายของคุณคือ {limit.toLocaleString()} mg/วัน
+                </p>
               </div>
             </div>
-            <p className="font-heading text-2xl font-bold text-destructive">
+            <p className={`font-heading text-2xl font-bold ${isOver ? "text-destructive" : "text-green-700"}`}>
               {totalSodium.toLocaleString()} mg
             </p>
+          </motion.div>
+        )}
+
+        {/* Empty state */}
+        {todayFoods.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center rounded-2xl bg-secondary/50 py-12"
+          >
+            <p className="text-muted-foreground text-sm">ยังไม่มีรายการอาหารวันนี้</p>
+            <button
+              onClick={() => navigate("/food-log")}
+              className="mt-3 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+            >
+              เพิ่มรายการอาหาร
+            </button>
           </motion.div>
         )}
 
@@ -67,10 +97,12 @@ const DailyTracking = () => {
               transition={{ delay: i * 0.04 }}
               className="glass-card flex items-center gap-4 rounded-2xl p-4 shadow-sm"
             >
-              <div className={`h-10 w-10 rounded-lg ${food.color}`} />
+              <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${mealColors[food.meal] || "bg-muted"} text-xl`}>
+                {food.emoji}
+              </div>
               <div className="flex-1">
                 <p className="font-heading font-semibold text-foreground">{food.name}</p>
-                <p className="text-xs text-muted-foreground">{food.meal}</p>
+                <p className="text-xs text-muted-foreground">{food.mealLabel}</p>
               </div>
               <p className="font-heading font-bold text-foreground">
                 {food.sodium.toLocaleString()} mg
