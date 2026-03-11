@@ -17,12 +17,14 @@ import Points from "./pages/Points";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import { FoodLogProvider } from "./contexts/FoodLogContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <FoodLogProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
@@ -43,6 +45,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      </FoodLogProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

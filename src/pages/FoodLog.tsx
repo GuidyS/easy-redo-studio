@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, ArrowLeft, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@/components/PageLayout";
+import { useFoodLog } from "@/contexts/FoodLogContext";
 
 const foodDatabase = [
   { id: 1, name: "ผัดไทย", sodium: 1000, emoji: "🍜" },
@@ -23,6 +24,7 @@ const mealTypes = [
 
 const FoodLog = () => {
   const navigate = useNavigate();
+  const { addEntries } = useFoodLog();
   const [search, setSearch] = useState("");
   const [selectedFoods, setSelectedFoods] = useState<number[]>([]);
   const [showMealModal, setShowMealModal] = useState(false);
@@ -48,7 +50,12 @@ const FoodLog = () => {
     }
   };
 
-  const handleMealSelect = (mealId: string) => {
+  const handleMealSelect = (mealId: string, mealLabel: string) => {
+    const foods = selectedFoods
+      .map((id) => foodDatabase.find((f) => f.id === id))
+      .filter(Boolean) as typeof foodDatabase;
+
+    addEntries(foods, mealId, mealLabel);
     setShowMealModal(false);
     navigate("/daily");
   };
@@ -61,7 +68,7 @@ const FoodLog = () => {
         className="space-y-5"
       >
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate("/dashboard")} className="text-muted-foreground hover:text-foreground transition-colors">
+          <button onClick={() => navigate("/daily")} className="text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="h-5 w-5" />
           </button>
           <h1 className="font-heading text-2xl font-bold text-foreground">
@@ -173,7 +180,7 @@ const FoodLog = () => {
                     key={meal.id}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
-                    onClick={() => handleMealSelect(meal.id)}
+                    onClick={() => handleMealSelect(meal.id, meal.label)}
                     className="flex w-full items-center gap-4 rounded-2xl bg-secondary p-4 text-left transition-colors hover:bg-secondary/80"
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-2xl">
