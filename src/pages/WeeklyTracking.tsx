@@ -1,19 +1,12 @@
 import { motion } from "framer-motion";
 import PageLayout from "@/components/PageLayout";
+import { useFoodLog } from "@/contexts/FoodLogContext";
 
 const limit = 2000;
 
-const weeklyData = [
-  { date: "01", month: "มีนา", sodium: 3500 },
-  { date: "02", month: "มีนา", sodium: 1800 },
-  { date: "03", month: "มีนา", sodium: 3500 },
-  { date: "04", month: "มีนา", sodium: 2100 },
-  { date: "05", month: "มีนา", sodium: 3500 },
-  { date: "05", month: "มีนา", sodium: 1500 },
-  { date: "06", month: "มีนา", sodium: 3500 },
-];
-
 const WeeklyTracking = () => {
+  const { getWeekSummary } = useFoodLog();
+  const weeklyData = getWeekSummary();
   const totalWeekly = weeklyData.reduce((sum, d) => sum + d.sodium, 0);
 
   return (
@@ -24,7 +17,7 @@ const WeeklyTracking = () => {
         className="space-y-4"
       >
         <h2 className="font-heading text-lg font-bold text-foreground text-center">
-          อาหารที่คุณรับประทานไปวันนี้
+          สรุปการบริโภคโซเดียมรายสัปดาห์
         </h2>
 
         <div className="grid grid-cols-2 gap-3">
@@ -32,22 +25,24 @@ const WeeklyTracking = () => {
             const isOver = day.sodium > limit;
             return (
               <motion.div
-                key={`${day.date}-${i}`}
+                key={day.date}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.05 }}
                 className="glass-card flex items-center gap-3 rounded-2xl p-4 shadow-sm"
               >
                 <div className="flex h-12 w-12 flex-col items-center justify-center rounded-xl bg-secondary">
-                  <span className="text-[10px] font-bold text-muted-foreground">{day.month}</span>
-                  <span className="font-heading text-lg font-bold text-foreground">{day.date}</span>
+                  <span className="text-[10px] font-bold text-muted-foreground">{day.monthLabel}</span>
+                  <span className="font-heading text-lg font-bold text-foreground">{day.dateLabel}</span>
                 </div>
                 <div>
                   <p className="font-heading font-bold text-foreground">
-                    {day.sodium.toLocaleString()} mg
+                    {day.sodium > 0 ? `${day.sodium.toLocaleString()} mg` : "— mg"}
                   </p>
-                  <p className={`text-xs font-semibold ${isOver ? "text-destructive" : "text-accent"}`}>
-                    {isOver ? "เกินเป้าหมาย" : "อยู่ในเกณฑ์"}
+                  <p className={`text-xs font-semibold ${
+                    day.sodium === 0 ? "text-muted-foreground" : isOver ? "text-destructive" : "text-accent"
+                  }`}>
+                    {day.sodium === 0 ? "ยังไม่มีข้อมูล" : isOver ? "เกินเป้าหมาย" : "อยู่ในเกณฑ์"}
                   </p>
                 </div>
               </motion.div>
@@ -63,7 +58,7 @@ const WeeklyTracking = () => {
           className="flex items-center justify-between rounded-2xl p-5 shadow-lg"
           style={{ background: "linear-gradient(135deg, hsl(45 90% 55%), hsl(25 85% 55%))" }}
         >
-          <p className="font-heading text-lg font-bold text-white">รวม</p>
+          <p className="font-heading text-lg font-bold text-white">รวมทั้งสัปดาห์</p>
           <p className="font-heading text-xl font-bold text-white">
             {totalWeekly.toLocaleString()} mg
           </p>
